@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<!--
+	Strata by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Stratos Infra</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="../../index.html" class="image avatar"><img src="../../images/stratos.png" alt="Stratos Infra" /></a>
+					<h1><strong>At Stratos Infra</strong>, we specialize in empowering businesses through innovative Infrastructure as Code solutions, crafting tailored strategies to optimize and automate their infrastructure needs.</h1>
+				</div>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- One -->
+					<section id="one">
+						<header class="major">
+							<h2>Importing AWS resources to Terraform</h2>
+						</header>
+                        <p><i>By: Peter Sutter 03/09/2024</i></p>
+						<p>Today we’ll convert an existing CloudWatch Alarm into an easily manageable Terraform manifest.</p>
+						<p>Let’s look at a company that has relied solely on manually created monitoring for their company website, which is being hosted on CloudFront. We want this monitoring to be completely similar between environments, we want it to be scalable, and we want to be able to use a code repository so that we can audit any changes made to the monitoring resources.</p>
+						<p>The employee has created a CloudWatch alarm called ‘test’ that monitors the total error rate on our CloudFront distribution in the console. When the SRE team asks them to tweak the alarm, they log into the console, make the changes, and apply them by hand. One time, they accidentally changed the alarm condition from GreaterThan to LessThan. This triggered alarms and a page to the on-call engineer. We will help them import this alarm so it can be managed with Terraform. Ensuring that changes are double checked with a PR and can easily be reverted in case of any problems.</p>
+						<br />
+						<center><img src="images/1.png" class="image fit thumb" alt="" />
+						Fig. 1 - This is the manually created CloudWatch alarm
+						</center>
+						<br />
+						<p>We will start by creating a Terraform manifest file called main.tf. Inside this file we will define the CloudWatch alarm using the parameters that we see in the manually created alarm.</p>
+						<center><img src="images/2.png" alt="" /></center>
+						<center>Fig. 2 - This is our Terraform manifest that defines the alarm</center>
+						<br />
+						Then we’ll import the existing alarm into the Terraform state file. This avoids the danger of a lapse  or duplicate alarm coverage while performing the migration to TF, because we’re simply taking over the management of the alarm. 
+						<br />
+						<br />
+						<code>terraform import aws_cloudwatch_metric_alarm.foo test</code>
+						<br />
+						<br />
+						<center><img src="images/3.png" alt="" /></center>
+						<br /> <br />
+							Now we can run the Terraform Development Workflow which is:
+						<br /> <br />
+						<code>terraform init</code>
+						<br />
+						<code>terraform plan</code>
+						<br />
+						<br />
+						<center><img src="images/4.png" alt="" /></center>
+						<br />
+						<br />
+						Terraform is now managing this alarm. If changes are required. We’ll be making them by updating the Terraform manifest and publishing them to the repository that holds our Terraform code. This repo can be called something like, company-website-monitoring-terraform, and will contain all of our CloudWatch alarms.
+						<br />
+						<br />
+						For example, if we want to change the threshold for this alarm from 50% to 25% errors, we simply change the value of threshold to .25. We push these changes to our code repository and run it through our Terraform workflow to see the plan, and to apply the changes.
+						<br />
+						<br />
+						<center><img src="images/5.png" alt="" /></center>
+
+
+					</section>
+
+
+				<!-- Contact -->
+					<section id="three">
+						<h2>Get In Touch</h2>
+						<p>Ready to elevate your infrastructure to new heights? Get in touch with us today to schedule a consultation. Discover how Stratos Infra can transform your business through the power of Infrastructure as Code. <br/><br/>You can reach us at <a href="mailto:consulting@stratoscloud.io" target="_blank">consulting@stratoscloud.io</a>.</p>
+					</section>
+				<!-- Blog -->
+					<section id="blog">
+						<h2>Recent Blog Posts</h2>
+						<div class="row">
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="streamlining-kubernetes-management-with-flux-and-terraform.html" class="image fit thumb"><img src="images/streamlining-kubernetes-management-with-flux-and-terraform.png" alt="" /></a>
+								<h3>Streamlining Kubernetes Management with Flux and Terraform</h3>
+								<p>In today's dynamic cloud-native landscape, Kubernetes has emerged as the de facto...</p>
+							</article>
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/providers.png" alt="" /></a>
+								<h3>Leveraging Infrastructure as Code (IaC) with Terraform: Ensuring Consistency and Saving Time</h3>
+								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
+							</article>
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/fulls/02.jpg" class="image fit thumb"><img src="images/aws-datadog.png" alt="" /></a>
+								<h3>Automated Monitoring with AWS and DataDog</h3>
+								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
+							</article>
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/fulls/03.jpg" class="image fit thumb"><img src="images/thumbs/03.jpg" alt="" /></a>
+								<h3>Tortor metus commodo</h3>
+								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
+							</article><!--
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/fulls/04.jpg" class="image fit thumb"><img src="images/thumbs/04.jpg" alt="" /></a>
+								<h3>Quam neque phasellus</h3>
+								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
+							</article>
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/fulls/05.jpg" class="image fit thumb"><img src="images/thumbs/05.jpg" alt="" /></a>
+								<h3>Nunc enim commodo aliquet</h3>
+								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
+							</article>
+							<article class="col-6 col-12-xsmall work-item">
+								<a href="images/fulls/06.jpg" class="image fit thumb"><img src="images/thumbs/06.jpg" alt="" /></a>
+								<h3>Risus ornare lacinia</h3>
+								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
+							</article>-->
+						</div>
+						<ul class="actions">
+							<li><a href="blog.html" class="button">Full Blog</a></li>
+						</ul>
+					</section>
+
+					<section id="four">
+						Site Design: <a href="http://html5up.net">HTML5 UP</a></section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<!--
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					-->
+					<ul class="copyright">
+						<li>&copy; 2024 StratosCloud LLC</li><li><a href="mailto:consulting@stratoscloud.io" target="_blank">consulting@stratoscloud.io</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.poptrox.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
